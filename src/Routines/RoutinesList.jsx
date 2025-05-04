@@ -2,27 +2,23 @@ import useQuery from "../api/useQuery";
 import { useNavigate } from "react-router";
 
 /** Shows a list of activities. */
-export default function ActivityList() {
-  const {
-    data: activities,
-    loading,
-    error,
-  } = useQuery("/activities", "activities");
+export default function RoutinesList() {
+  const { data: routines, loading, error } = useQuery("/routines", "rountine");
 
-  if (loading || !activities) return <p>Loading...</p>;
+  if (loading || !routines) return <p>Loading...</p>;
   if (error) return <p>Sorry! {error}</p>;
-
+  console.log(routines);
   return (
     <ul>
-      {activities.map((activity) => (
-        <ActivityListItem key={activity.id} activity={activity} />
+      {routines.map((routine) => (
+        <RoutineListItem key={routine.id} routine={routine} />
       ))}
     </ul>
   );
 }
 
 /** Shows a single activity. Logged-in users will also see a delete button. */
-function ActivityListItem({ activity }) {
+function RoutineListItem({ routine }) {
   //const {
   //mutate: deleteActivity,
   //loading,
@@ -31,10 +27,8 @@ function ActivityListItem({ activity }) {
   let navigate = useNavigate();
   return (
     <li>
-      <p>{activity.name}</p>
-      <p onClick={() => navigate(`/activities/${activity.id}`)}>
-        view Activity
-      </p>
+      <p>{routine.name}</p>
+      <p onClick={() => navigate(`/routines/${routine.id}`)}>view Routine</p>
     </li>
   );
 }
